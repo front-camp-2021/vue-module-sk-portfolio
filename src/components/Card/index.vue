@@ -19,23 +19,21 @@
       </div>
     </div>
     <div class="product-card__btns">
-      <button class="product-card__btn btn" @click="toggleWishList">
-        <img
-          v-if="!card.isWished"
-          src="../../assets/img/icons/heart.svg"
-          alt="heart"
-        />
-        <img
-          v-else
-          src="../../assets/img/icons/heart-painted.svg"
-          alt="heart"
-        />
+      <button
+        v-if="!card.isWished"
+        class="product-card__btn btn"
+        @click="addToWishList"
+      >
+        <img src="../../assets/img/icons/heart.svg" alt="heart" />
         <span>WISHLIST</span>
       </button>
-
+      <button v-else class="product-card__btn btn" @click="removeFromWishList">
+        <img src="../../assets/img/icons/heart-painted.svg" alt="heart" />
+        <span>WISHLIST</span>
+      </button>
       <button class="product-card__btn btn btn--violet" @click="toggleCart">
         <img src="../../assets/img/icons/bag.svg" alt="bag" />
-        <span> Cart </span>
+        <span> ADD TO CARD </span>
       </button>
     </div>
   </article>
@@ -53,15 +51,15 @@ export default {
     },
   },
   methods: {
-    toggleWishList() {
-
-      this.$emit('change-wishlist', {id:this.card.id, isWished: this.card.isWished})
+    addToWishList() {
+      this.$emit("add-to-wishlist", this.card.id);
+    },
+    removeFromWishList() {
+      this.$emit("remove-from-wishlist", this.card.id);
     },
   },
   data() {
-    return {
-
-    };
+    return {};
   },
 };
 </script>

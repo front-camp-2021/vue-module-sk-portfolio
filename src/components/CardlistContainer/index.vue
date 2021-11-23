@@ -25,7 +25,8 @@
             <search @submit-search="onSubmitSearch" />
             <cardlist
               :products="onCurrentPage"
-              @change-wishlist="onChangeWishlist"
+              @add-to-wishlist="addToWishlist"
+              @remove-from-wishlist="removeFromWishList"
             />
           </div>
         </div>
@@ -75,7 +76,40 @@ export default {
     };
   },
   methods: {
-    onChangeWishlist(){},
+    addToWishlist(e) {
+      const wishlistFromLocalStorage = JSON.parse(localStorage.getItem("wishlist"))
+      this.wishlist =
+        wishlistFromLocalStorage !== null
+          ? wishlistFromLocalStorage
+          : [];
+
+      localStorage.setItem("wishlist", JSON.stringify([...this.wishlist, e]));
+      this.setWishlist();
+    },
+    removeFromWishList(e) {
+      const wishlistFromLocalStorage = JSON.parse(localStorage.getItem("wishlist"))
+      this.wishlist =
+        wishlistFromLocalStorage !== null
+          ? wishlistFromLocalStorage
+          : [];
+      const newWishlist = this.wishlist.filter((id) => id !== e);
+      localStorage.setItem("wishlist", JSON.stringify([...newWishlist]));
+      this.setWishlist();
+    },
+    setWishlist() {
+     const wishlistFromLocalStorage = JSON.parse(localStorage.getItem("wishlist"))
+      this.wishlist =
+        wishlistFromLocalStorage !== null
+          ? wishlistFromLocalStorage
+          : [];
+      this.productsFromRange = this.productsFromRange.map((product) => {
+        const valid = this.wishlist.some((id) => product.id === id);
+        return valid
+          ? { ...product, isWished: true }
+          : { ...product, isWished: false };
+      });
+      this.setCurrentPageProducts()
+    },
     onChangeCurrentPage(e) {
       this.currentPage = e;
     },
@@ -133,8 +167,8 @@ export default {
       } else {
         this.productsFromRange = [...this.productsForFilter];
       }
-          this.setCurrentPageProducts();
-    this.getNumberOfPages();
+      this.setCurrentPageProducts();
+      this.getNumberOfPages();
     },
     setCurrentPageProducts() {
       this.onCurrentPage = this.productsFromRange.slice(
@@ -253,6 +287,7 @@ export default {
   },
   updated() {
     this.productsFromSlidersRange();
+    this.setWishlist();
   },
 };
 </script>

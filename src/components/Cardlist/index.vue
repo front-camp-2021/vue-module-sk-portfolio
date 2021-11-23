@@ -4,7 +4,8 @@
       v-for="product in products"
       :key="product.id"
       :card="{...product}"
-      @change-wishlist="onChangeWishlist"
+      @add-to-wishlist="addToWishlist"
+      @remove-from-wishlist="removeFromWishList"
     />
   </div>
 </template>
@@ -29,8 +30,11 @@ export default {
     };
   },
   methods: {
-    onChangeWishlist(e){
-      this.$emit('change-wishlist', e)
+    addToWishlist(e){
+      this.$emit('add-to-wishlist', e)
+    },
+    removeFromWishList(e){
+      this.$emit('remove-from-wishlist', e)
     },
   },
 };
