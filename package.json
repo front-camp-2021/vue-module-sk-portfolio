@@ -10,6 +10,8 @@
     "json-server": "json-server"
   },
   "dependencies": {
+    "@vueform/slider": "^2.0.5",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "json-server": "^0.16.3",
     "vue": "^3.0.0",
@@ -23,6 +25,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "@vue/composition-api": "^1.4.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
