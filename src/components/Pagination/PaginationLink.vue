@@ -36,6 +36,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .pagination {
   // .pagination__item
   &__item {
@@ -86,7 +87,7 @@ export default defineComponent({
         border-radius: 50%;
         width: 4rem;
         height: 4rem;
-        background-color: #6f64f8;
+        background-color: $violet;
         z-index: -1;
         @media screen and (max-width: 720px) {
           width: 2.8rem;
@@ -95,7 +96,7 @@ export default defineComponent({
       }
 
       &:before {
-        color: #fff;
+        color: $white;
       }
     }
   }

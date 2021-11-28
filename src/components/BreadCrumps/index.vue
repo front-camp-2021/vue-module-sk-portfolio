@@ -59,6 +59,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .bread-cramps {
   display: flex;
   align-items: center;
@@ -84,10 +85,10 @@ export default defineComponent({
       margin-right: 0;
       padding-right: 0;
       .bread-cramps__link {
-        color: #000;
+        color: $black;
       }
       .bread-cramps__link svg path {
-        stroke: #000;
+        stroke: $black;
       }
       &:after {
         display: none;
@@ -98,7 +99,7 @@ export default defineComponent({
   &__link {
     font-size: 1.4rem;
     line-height: 1.7rem;
-    color: #7e72f2;
+    color: $violet;
   }
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <router-link 
       class="btn btn--only-img btn--violet btn--large" 
-      to="/products"
+      to="/"
     >
       GO TO HOME
     </router-link>

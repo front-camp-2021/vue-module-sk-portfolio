@@ -115,6 +115,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss";  
 .product-card {
   display: flex;
   flex-direction: column;
@@ -122,7 +123,7 @@ export default defineComponent({
   width: 100%;
   border-radius: 8px;
   box-shadow: 0px 2px 8px 0px rgba(00, 00, 00, 0.1352);
-  background-color: #fff;
+  background-color: $white;
   // .product-card__main
   &__main {
     padding: 3.1rem 2.49rem 2.2rem 2.372rem;
@@ -194,10 +195,10 @@ export default defineComponent({
     min-width: 6.4rem;
     border-radius: 3px;
     box-sizing: border-box;
-    background-color: #6f64f8;
+    background-color: $violet;
 
     span {
-      color: #fff;
+      color: $white;
       font-size: 1.4rem;
       line-height: 1.7rem;
     }

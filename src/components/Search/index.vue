@@ -37,6 +37,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .search {
   position: relative;
   box-shadow: 0px 2px 8px 0px rgba(00, 00, 00, 0.1352);
@@ -54,7 +55,7 @@ export default defineComponent({
     padding: 1.7rem 3.8rem 1.7rem 3.2rem;
     width: 100%;
     height: 6.2rem;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 8px;
   }
 }

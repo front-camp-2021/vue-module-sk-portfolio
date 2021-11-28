@@ -3,14 +3,11 @@ import Home from "../views/Home.vue";
 import WishlistPage from "../views/WishlistPage.vue";
 import CartPage from "../views/CartPage.vue";
 import SingleProduct from "../views/SingleProduct.vue";
+import NotFound from "../views/NotFound.vue";
 
 const routes = [
   {
     path: "/",
-    redirect: "/products",
-  },
-  {
-    path: "/products",
     name: "Home",
     component: Home,
   },
@@ -28,6 +25,10 @@ const routes = [
     path: "/cart",
     name: "CartPage",
     component: CartPage,
+  },
+  {
+    path: "/:patchMatch(.*)*",
+    component: NotFound,
   },
 ];
 

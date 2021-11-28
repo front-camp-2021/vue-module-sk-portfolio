@@ -62,6 +62,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/styles/_variables.scss";
 .container {
   padding: 3rem;
   box-sizing: border-box;
@@ -78,7 +79,7 @@ export default defineComponent({
   height: 100%;
   border-radius: 8px;
   box-shadow: 0px 2px 8px 0px rgba(00, 00, 00, 0.1352);
-  background-color: #fff;
+  background-color: $white;
   box-sizing: border-box;
   margin: 2rem auto 0 auto;
   @media screen and (max-width: 576px) {
@@ -111,10 +112,10 @@ export default defineComponent({
     min-width: 6.4rem;
     border-radius: 3px;
     box-sizing: border-box;
-    background-color: #6f64f8;
+    background-color: $violet;
 
     span {
-      color: #fff;
+      color: $white;
       font-size: 1.4rem;
       line-height: 1.7rem;
     }

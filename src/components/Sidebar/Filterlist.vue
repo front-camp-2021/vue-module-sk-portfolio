@@ -71,9 +71,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .sidebar__form {
   height: 100%;
-  background-color: #fff;
+  background-color: $white;
   border-radius: 8px;
   padding: 3.2rem 4.4rem;
   margin-bottom: 4rem;

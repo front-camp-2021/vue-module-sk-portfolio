@@ -172,6 +172,8 @@ export default defineComponent({
 
 <style src="@vueform/slider/themes/default.css"></style>
 <style lang="scss">
+@import "../../assets/styles/_variables.scss";
+
 .slider-tooltip {
   font-size: 1.4rem;
   font-weight: 500;
@@ -185,11 +187,11 @@ export default defineComponent({
   margin: 4rem 2.8rem 2rem 2.8rem;
 }
 .slider-connect {
-  background: #6f64f8;
+  background: $violet;
 }
 .slider-tooltip {
-  background: #6f64f8;
-  border: #6f64f8;
+  background: $violet;
+  border: $violet;
   font-family: "Montserrat", sans-serif;
 }
 .sidebar {
@@ -208,7 +210,7 @@ export default defineComponent({
   // .sidebar__form
   &__form {
     height: 100%;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 8px;
     padding: 3.2rem 4.4rem;
     margin-bottom: 4rem;

@@ -24,11 +24,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .header {
   padding: 2.7rem 0;
   // .header__logo
   &__logo {
-    color: #7e72f2;
+    color: $violet;
     font-size: 4.8rem;
     line-height: 1.3;
     display: flex;

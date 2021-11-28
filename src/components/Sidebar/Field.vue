@@ -50,6 +50,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "../../assets/styles/_variables.scss"; 
 .field {
   position: relative;
   display: flex;
@@ -68,12 +69,12 @@ export default defineComponent({
   }
 
   input:checked + .field__radio-substitute {
-    border: 1px solid #6f64f8;
+    border: 1px solid $violet;
   }
 
   input:checked + .field__radio-substitute,
   input:checked + .field__checkbox-substitute {
-    background-color: #6f64f8;
+    background-color: $violet;
   }
   // .field__info
   &__info {
