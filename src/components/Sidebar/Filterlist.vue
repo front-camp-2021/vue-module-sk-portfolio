@@ -1,6 +1,6 @@
 <template>
   <form class="sidebar__form">
-    <div class="sidebar__filter" data-element="body">
+    <div class="sidebar__filter">
       <h3>
         <strong> Categories </strong>
       </h3>
@@ -11,10 +11,10 @@
         :checked="field.checked"
         :type="field.type"
         @toggle-active="onToggleActive"
-      ></field>
+      />
     </div>
 
-    <div class="sidebar__filter" data-element="body">
+    <div class="sidebar__filter">
       <h3>
         <strong> Brands </strong>
       </h3>
@@ -25,7 +25,7 @@
         :checked="field.checked"
         :type="field.type"
         @toggle-active="onToggleActive"
-      ></field>
+      />
     </div>
     {{ e }}
   </form>
@@ -33,8 +33,9 @@
 
 <script>
 import Field from "./Field.vue";
+import {defineComponent} from "vue"
 
-export default {
+export default defineComponent({
   name: "Filterlist",
   components: {
     Field,
@@ -58,21 +59,15 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-
+  setup(props,{emit}){
+    const onToggleActive = function(e) {
+      emit('toggle-active', e)
     };
+    return {
+      onToggleActive
+    }
   },
-  methods: {
-    onToggleActive(e) {
-      this.$emit('toggle-active', e)
-    },
-
-  },
-  watch: {
- 
-  },
-};
+});
 </script>
 
 <style lang="scss">

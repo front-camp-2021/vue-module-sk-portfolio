@@ -2,66 +2,116 @@
   <article class="products__item product-card product-card--with-rating">
     <div class="product-card__main">
       <div class="product-card__img">
-        <img :src="card.images[0]" alt="product" />
+        <img 
+          :src="card.images[0]" 
+          alt="product" 
+        >
       </div>
       <div class="product-card__info">
         <div class="product-card__wr">
           <div class="product-card__rating">
             <span> {{ card.rating }} </span>
-            <img src="../../assets/img/icons/star.svg" alt="rating-star" />
+            <img 
+              src="../../assets/img/icons/star.svg" 
+              alt="rating-star"
+            >
           </div>
-          <div class="product-card__price">${{ card.price }}</div>
+          <div class="product-card__price">
+            ${{ card.price }}
+          </div>
         </div>
-        <a class="product-card__description">
+        <router-link 
+          :to="`/products/${card.id}`" 
+          class="product-card__description"
+        >
           <h3>{{ card.title }}</h3>
+
           <p>description</p>
-        </a>
+        </router-link>
       </div>
     </div>
     <div class="product-card__btns">
-      <button
-        v-if="!card.isWished"
-        class="product-card__btn btn"
+      <button 
+        v-if="!card.isWished" 
+        class="product-card__btn btn" 
         @click="addToWishList"
       >
-        <img src="../../assets/img/icons/heart.svg" alt="heart" />
+        <img 
+          src="../../assets/img/icons/heart.svg" 
+          alt="heart" 
+        >
         <span>WISHLIST</span>
       </button>
-      <button v-else class="product-card__btn btn" @click="removeFromWishList">
-        <img src="../../assets/img/icons/heart-painted.svg" alt="heart" />
+      <button 
+        v-else 
+        class="product-card__btn btn" 
+        @click="removeFromWishList"
+      >
+        <img 
+          src="../../assets/img/icons/heart-painted.svg" 
+          alt="heart"
+        >
         <span>WISHLIST</span>
       </button>
-      <button class="product-card__btn btn btn--violet" @click="toggleCart">
-        <img src="../../assets/img/icons/bag.svg" alt="bag" />
+      <button 
+        v-if="!card.isCart" 
+        class="product-card__btn btn btn--violet" 
+        @click="addToCart"
+      >
+        <img 
+          src="../../assets/img/icons/bag.svg" 
+          alt="bag" 
+        >
         <span> ADD TO CARD </span>
+      </button>
+      <button 
+        v-else 
+        class="product-card__btn btn btn--violet" 
+        @click="removeFromCart"
+      >
+        <img 
+          src="../../assets/img/icons/delete-from-cart.svg" 
+          alt="bag"
+        >
+        <span> REMOVE FROM CARD </span>
       </button>
     </div>
   </article>
 </template>
 
 <script>
-export default {
+import { v4 as uuidv4 } from "uuid";
+import {defineComponent} from "vue"
+
+export default defineComponent({
   name: "Card",
   props: {
     card: {
       type: Object,
-      default: function () {
-        return {};
-      },
+      default: () => {},
     },
   },
-  methods: {
-    addToWishList() {
-      this.$emit("add-to-wishlist", this.card.id);
-    },
-    removeFromWishList() {
-      this.$emit("remove-from-wishlist", this.card.id);
-    },
+  setup(props, { emit }) {
+    const addToWishList = function () {
+      emit("add-to-wishlist", props.card.id);
+    };
+    const removeFromWishList = function () {
+      emit("remove-from-wishlist", props.card.id);
+    };
+    const addToCart = function () {
+      emit("add-to-cart", { ...props.card, uuId: uuidv4() });
+    };
+    const removeFromCart = function () {
+      emit("remove-from-cart", props.card);
+    };
+    return {
+      addToWishList,
+      removeFromWishList,
+      addToCart,
+      removeFromCart,
+    };
   },
-  data() {
-    return {};
-  },
-};
+});
 </script>
 
 <style lang="scss">

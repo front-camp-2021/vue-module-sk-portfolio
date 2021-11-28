@@ -1,23 +1,26 @@
 <template>
   <header class="header">
     <div class="container">
-      <a routerLink="/" class="header__logo">
-        <img src="../../assets/img/logo/logo.png" alt="logo" />
+      <router-link 
+        to="/"
+        class="header__logo"
+      >
+        <img 
+          src="../../assets/img/logo/logo.png" 
+          alt="logo"
+        >
         <strong> Online Store </strong>
-      </a>
+      </router-link>
     </div>
   </header>
 </template>
 
 <script>
-export default {
+import {defineComponent} from "vue"
+
+export default defineComponent({
   name: "AppHeader",
-  props: {},
-  methods: {},
-  data() {
-    return {};
-  },
-};
+});
 </script>
 
 <style lang="scss">

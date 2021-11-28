@@ -3,37 +3,50 @@
     <div class="sidebar__head">
       <h3>Filters</h3>
       <button class="btn btn--only-img btn--white-bg">
-        <img src="../../assets/img/icons/arrows-left.svg" alt="close" />
+        <img 
+          src="../../assets/img/icons/arrows-left.svg" 
+          alt="close" 
+        >
       </button>
     </div>
-    <Slider v-model="price" :min="0" :max="100000" :format="priceFormat" @input="onChangePrice"/>
+    <Slider 
+      v-model="price" 
+      :min="0" 
+      :max="100000" 
+      :format="priceFormat" 
+      @change="onChangePrice" 
+    />
     <Slider
       v-model="rating"
       :min="0"
       :max="5"
       :step="0.25"
       :format="ratingFormat"
-      @input="onChangeRating"
+      @change="onChangeRating"
     />
     <filterlist
       :categories="categories"
       :brands="brands"
-      :activeBrands="activeBrands"
-      :activeCategories="activeCategories"
+      :active-brands="activeBrands"
+      :active-categories="activeCategories"
       @toggle-active="onToggleActive"
     />
-    <button class="btn btn--large-font btn--violet btn--full-width">
+    <button 
+      class="btn btn--large-font btn--violet btn--full-width" 
+      @click="onResetAllInputs"
+    >
       CLEAR ALL FILTERS
     </button>
   </aside>
 </template>
 
 <script>
+import { defineComponent, onBeforeMount, ref, computed } from "vue";
 import Filterlist from "./Filterlist.vue";
 import Slider from "@vueform/slider";
-import axios from 'axios';
+import axios from "axios";
 
-export default {
+export default defineComponent({
   name: "Sidebar",
   components: {
     Filterlist,
@@ -51,65 +64,123 @@ export default {
     },
   },
 
-  data: () => ({
-    price: [0, 100000],
-    rating: [0, 5],
-    priceFormat: {
+  setup(props, { emit }) {
+    onBeforeMount(() => {
+      getFiledsValues();
+    });
+    const categoriesResponse = ref([]);
+    const brandsResponse = ref([]);
+    const categoriesChecked = ref([]);
+    const brandsChecked = ref([]);
+    const price = ref([0, 100000]);
+    const rating = ref([0, 5]);
+    const priceFormat = {
       prefix: "$",
       decimals: 0,
-    },
-    ratingFormat: {
+    };
+    const ratingFormat = {
       decimals: 2,
-    },
-    categoriesResponse: [],
-    brandsResponse: [],
-    categoriesBaseUrl: 'http://localhost:3001/categories',
-    brandsBaseUrl: 'http://localhost:3001/brands',
-  }),
-
-  computed: {
-    brands() {
-      return this.brandsResponse.map((brand) => ({ field: brand, type: "brand" }));
-    },
-    categories() {
-      return this.categoriesResponse.map((category) => ({
-        field: category,
-        type: "category",
-      }));
-    },
+    };
+    const onResetAllInputs = function (e) {
+      emit("reset-all-inputs", e);
+      brandsChecked.value = [];
+      categoriesChecked.value = [];
+      price.value = [0, 100000];
+      rating.value = [0, 5];
+    };
+    const onToggleActive = function (e) {
+      switch (e.type) {
+        case "brand":
+          e.checked
+            ? brandsChecked.value.push(e.field)
+            : (brandsChecked.value = brandsChecked.value.filter((brand) => brand !== e.field));
+          break;
+        case "category":
+          e.checked
+            ? categoriesChecked.value.push(e.field)
+            : (categoriesChecked.value = categoriesChecked.value.filter(
+                (category) => category !== e.field
+              ));
+          break;
+      }
+      emit("toggle-active", e);
+    };
+    const onChangePrice = function (e) {
+      console.log(e)
+      emit("price-range-update", e);
+    };
+    const onChangeRating = function (e) {
+      emit("rating-range-update", e);
+    };
+    const getFiledsValues = function () {
+      axios
+        .get("http://localhost:3001/categories")
+        .then((res) => (categoriesResponse.value = res.data));
+      axios.get("http://localhost:3001/brands").then((res) => (brandsResponse.value = res.data));
+    };
+    const brands = computed(() => {
+      return brandsResponse.value.map((brand) => {
+        const isChecked = brandsChecked.value.some((brandChecked) => brandChecked === brand);
+        const field = isChecked
+          ? {
+              field: brand,
+              type: "brand",
+              checked: true,
+            }
+          : {
+              field: brand,
+              type: "brand",
+              checked: false,
+            };
+        return field;
+      });
+    });
+    const categories = computed(() => {
+      return categoriesResponse.value.map((category) => {
+        const isChecked = categoriesChecked.value.some(
+          (categoryChecked) => categoryChecked === category
+        );
+        const field = isChecked
+          ? {
+              field: category,
+              type: "category",
+              checked: true,
+            }
+          : {
+              field: category,
+              type: "category",
+              checked: false,
+            };
+        return field;
+      });
+    });
+    return {
+      rating,
+      price,
+      priceFormat,
+      ratingFormat,
+      onToggleActive,
+      onChangeRating,
+      onChangePrice,
+      categories,
+      brands,
+      getFiledsValues,
+      onResetAllInputs,
+    };
   },
-  created() {
-    axios.get(this.categoriesBaseUrl)
-    .then(res => this.categoriesResponse = res.data)
-     axios.get(this.brandsBaseUrl)
-    .then(res => this.brandsResponse = res.data)
-  },
-  methods: {
-    onToggleActive(e) {
-    
-      this.$emit("toggle-active", e);
-    },
-    onChangePrice(e){
-      this.$emit('price-range-update', e)
-    },
-    onChangeRating(e){
-       this.$emit('rating-range-update', e)
-    }
-  },
-};
+});
 </script>
 
-
 <style src="@vueform/slider/themes/default.css"></style>
-<style lang="scss" >
-.slider-tooltip{
+<style lang="scss">
+.slider-tooltip {
   font-size: 1.4rem;
   font-weight: 500;
   min-height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
 }
 .slider-target {
   margin: 4rem 2.8rem 2rem 2.8rem;
@@ -153,7 +224,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.4rem;
+    margin-bottom: 1.2rem;
   }
 
   // .sidebar__filter

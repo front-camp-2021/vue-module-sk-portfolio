@@ -3,47 +3,55 @@
     <card
       v-for="product in products"
       :key="product.id"
-      :card="{...product}"
+      :card="{ ...product }"
       @add-to-wishlist="addToWishlist"
       @remove-from-wishlist="removeFromWishList"
+      @add-to-cart="addToCart"
+      @remove-from-cart="removeFromCart"
     />
   </div>
 </template>
 
 <script>
 import Card from "../Card/index.vue";
-export default {
+import {defineComponent} from "vue"
+
+export default defineComponent({
   name: "Cardlist",
   components: {
     Card,
   },
 
   props: {
-    products:{
+    products: {
       type: Array,
       default: () => [],
     },
   },
-  data() {
+  setup(props, { emit }) {
+    const addToWishlist = function (e) {
+      emit("add-to-wishlist", e);
+    };
+    const removeFromWishList = function (e) {
+      emit("remove-from-wishlist", e);
+    };
+    const addToCart = function (e) {
+      emit("add-to-cart", e);
+    };
+    const removeFromCart = function (e) {
+      emit("remove-from-cart", e);
+    };
     return {
-      
+      addToWishlist,
+      removeFromWishList,
+      addToCart,
+      removeFromCart,
     };
   },
-  methods: {
-    addToWishlist(e){
-      this.$emit('add-to-wishlist', e)
-    },
-    removeFromWishList(e){
-      this.$emit('remove-from-wishlist', e)
-    },
-  },
-};
-
+});
 </script>
 
 <style lang="scss">
-
-
 .products {
   // .products__inner
   &__inner {

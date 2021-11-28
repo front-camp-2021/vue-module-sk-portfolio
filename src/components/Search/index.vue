@@ -1,28 +1,39 @@
 <template>
-  <form class="products__search search" @submit.prevent="onSubmit">
-    <input type="text" placeholder="Search" v-model="searchValue">
+  <form 
+    class="products__search search" 
+    @submit.prevent="onSubmit"
+  >
+    <input 
+      v-model="searchValue" 
+      type="text" 
+      placeholder="Search" 
+    >
     <button>
-      <img src="../../assets/img/icons/search.svg" alt="search">
+      <img 
+        src="../../assets/img/icons/search.svg" 
+        alt="search"
+      >
     </button>
   </form>
 </template>
 
 <script>
-export default {
-  name: "Search",
-  components: {},
+import { ref } from "vue";
+import {defineComponent} from "vue"
 
-  props: {},
-  data() {
+export default defineComponent({
+  name: "Search",
+  setup(props, { emit }) {
+    const searchValue = ref("");
+    const onSubmit = function () {
+      emit("submit-search", searchValue.value);
+    };
     return {
+      onSubmit,
+      searchValue,
     };
   },
-  methods: {
-    onSubmit(){
-      this.$emit('submit-search', this.searchValue)
-    }
-  },
-};
+});
 </script>
 
 <style lang="scss">

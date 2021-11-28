@@ -1,14 +1,19 @@
 <template>
   <li class="pagination__item">
-    <a href="#" class="pagination__link" :class="{ 'pagination__link--current': pageNumber === currentPage }" @click="setCurrentPage"></a>
+    <a
+      href="#"
+      class="pagination__link"
+      :class="{ 'pagination__link--current': pageNumber === currentPage }"
+      @click="setCurrentPage"
+    />
   </li>
 </template>
 
 <script>
-export default {
-  name: "PaginationLink",
-  components: {},
+import {defineComponent} from "vue"
 
+export default defineComponent({
+  name: "PaginationLink",
   props: {
     currentPage: {
       type: Number,
@@ -19,15 +24,15 @@ export default {
       default: 1,
     },
   },
-  data() {
-    return {};
+  setup(props, { emit }) {
+    const setCurrentPage = function () {
+      emit("change-current-page", props.pageNumber);
+    };
+    return {
+      setCurrentPage,
+    };
   },
-  methods: {
-    setCurrentPage() {
-      this.$emit("change-current-page", this.pageNumber);
-    },
-  },
-};
+});
 </script>
 
 <style lang="scss">

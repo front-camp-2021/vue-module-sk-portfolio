@@ -1,44 +1,48 @@
 <template>
   <nav class="products-list__pagination pagination">
-    <button class="pagination__btn pagination__btn--left" @click="goToPrevPage">
-      <img src="../../assets/img/icons/arrow-left.svg" alt="prev" />
+    <button
+      :disabled="currentPage === 1"
+      :class="{ 'pagination__btn--disable': currentPage === 1 }"
+      class="pagination__btn pagination__btn--left"
+      @click="goToPrevPage"
+    >
+      <img 
+        src="../../assets/img/icons/arrow-left.svg" 
+        alt="prev"
+      >
     </button>
 
     <ul class="pagination__list">
       <pagination-link
         v-for="page in numberOfPages"
         :key="page"
-        :currentPage="currentPage"
-        :pageNumber="page"
+        :current-page="currentPage"
+        :page-number="page"
         @change-current-page="onChangeCurrentPage"
-      ></pagination-link>
+      />
     </ul>
-    <button class="pagination__btn pagination__btn--right" @click="goToNextPage">
-      <img src="../../assets/img/icons/arrow-left.svg" alt="prev" />
+    <button
+      :disabled="currentPage === numberOfPages"
+      :class="{ 'pagination__btn--disable': currentPage === numberOfPages }"
+      class="pagination__btn pagination__btn--right"
+      @click="goToNextPage"
+    >
+      <img 
+        src="../../assets/img/icons/arrow-left.svg" 
+        alt="prev"
+      >
     </button>
   </nav>
 </template>
 
 <script>
 import PaginationLink from "./PaginationLink.vue";
+import {defineComponent} from "vue"
 
-export default {
+export default defineComponent({
   name: "Pagination",
   components: {
     PaginationLink,
-  },
-  methods:{
-    goToPrevPage(){
-      const prevPage = this.currentPage === 1 ? 1 : this.currentPage - 1
-      this.$emit('go-to-prev', prevPage)
-    },
-     goToNextPage(){
-      const nextPage = this.currentPage === this.numberOfPages ? 1 : this.currentPage + 1
-      this.$emit('go-to-next', nextPage)
-    },
-    onChangeCurrentPage(e){
-      this.$emit('change-current-page', e)
-    }
   },
   props: {
     numberOfPages: {
@@ -50,10 +54,26 @@ export default {
       default: 1,
     },
   },
-  data() {
-    return {};
+  setup(props, { emit }) {
+    const goToPrevPage = function (e) {
+      const prevPage = props.currentPage === 1 ? 1 : props.currentPage - 1;
+      emit("go-to-prev", prevPage);
+    };
+    const goToNextPage = function (e) {
+      const nextPage =
+        props.currentPage === props.numberOfPages ? props.numberOfPages : props.currentPage + 1;
+      emit("go-to-next", nextPage);
+    };
+    const onChangeCurrentPage = function (e) {
+      emit("change-current-page", e);
+    };
+    return {
+      goToPrevPage,
+      goToNextPage,
+      onChangeCurrentPage,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss">
@@ -85,7 +105,11 @@ export default {
       height: 1.2rem;
     }
   }
-
+  // .pagination__btn--disable
+  &__btn--disable {
+    opacity: 0.3;
+    pointer-events: none;
+  }
   // .pagination__btn--right
   &__btn--right {
     img {

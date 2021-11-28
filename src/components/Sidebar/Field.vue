@@ -1,9 +1,14 @@
 <template>
-  <label class="field field--checkbox sidebar__field">
-    <input type="checkbox"    
-          :checked="checked"
-          @change="toggleActive" />
-    <span class="field__checkbox-substitute"> </span>
+  <label 
+    class="field field--checkbox sidebar__field" 
+    @click="toggleActive"
+  >
+    <input 
+      type="checkbox" 
+      :checked="checked" 
+      disabled 
+    >
+    <span class="field__checkbox-substitute" /> 
     <span class="field__info">
       <span class="field__name">{{ field }}</span>
     </span>
@@ -11,10 +16,10 @@
 </template>
 
 <script>
-export default {
-  name: "Field",
-  components: {},
+import {defineComponent} from "vue"
 
+export default defineComponent({
+  name: "Field",
   props: {
     type: {
       type: String,
@@ -29,21 +34,19 @@ export default {
       default: false,
     },
   },
- computed: {
-   
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    toggleActive() {
-      this.$emit("toggle-active", {
-        type: this.type,
-        field: this.field,
+  setup(props, { emit }) {
+    const toggleActive = function () {
+      emit("toggle-active", {
+        type: props.type,
+        field: props.field,
+        checked: !props.checked,
       });
-    },
+    };
+    return {
+      toggleActive,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss">

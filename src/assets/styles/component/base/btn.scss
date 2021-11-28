@@ -47,4 +47,9 @@
       margin: 0;
     }
   }
+  &.btn--large{
+    min-width: 29rem;
+    display: inline-flex;
+    margin-bottom: 3.2rem;
+  }
 }
