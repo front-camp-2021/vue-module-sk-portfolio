@@ -17,7 +17,7 @@
               <div class="products__btns">
                 <router-link 
                   class="btn btn--only-img btn--violet btn--router" 
-                  to="/wishlist"
+                  to="/products/wishlist"
                 >
                   <img 
                     src="../../assets/img/icons/white-heart.svg" 
@@ -26,7 +26,7 @@
                 </router-link>
                 <router-link 
                   class="btn btn--only-img btn--violet btn--router" 
-                  to="/cart"
+                  to="/products/cart"
                 >
                   <img 
                     src="../../assets/img/icons/bag.svg" 

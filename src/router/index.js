@@ -17,12 +17,12 @@ const routes = [
     component: SingleProduct,
   },
   {
-    path: "/wishlist",
+    path: "/products/wishlist",
     name: "WishlistPage",
     component: WishlistPage,
   },
   {
-    path: "/cart",
+    path: "/products/cart",
     name: "CartPage",
     component: CartPage,
   },

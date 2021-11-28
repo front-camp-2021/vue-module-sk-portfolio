@@ -8,7 +8,7 @@
     </router-link>
     <router-link 
       class="btn btn--only-img btn--violet btn--large"
-      to="/cart"
+      to="/products/cart"
     >
       GO TO CART
     </router-link>
