@@ -106,7 +106,6 @@ export default defineComponent({
       emit("toggle-active", e);
     };
     const onChangePrice = function (e) {
-      console.log(e)
       emit("price-range-update", e);
     };
     const onChangeRating = function (e) {
